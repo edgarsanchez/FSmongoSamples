@@ -4,11 +4,16 @@ open MongoDB.Driver
 
 // Easy way to create a KeyValuePair: "age" => 42
 let inline (=>) key (value: obj) = KeyValuePair (key, value)
-// // Several mongoDb methods leverage this implicit conversions but F# don't use them automaticallly
+// Several mongoDb methods leverage C# implicit conversions but F# don't use them automaticallly
+// So we use the !> operator to explicitly do the conversions when needed
 let inline (!>) (x:^a) : ^b = ((^a or ^b) : (static member op_Implicit : ^a -> ^b) x)
-// // Quick way to create a BsonDocument with just one key value pair
+// Quick way to create a BsonDocument with just one key value pair
 let inline bsonDoc key value = BsonDocument (BsonElement (key, !> value))
+// Some filter methods require a StringFieldDefinition<string> as first parameter
+// bsonField allows to quickly create such parameter
 let inline bsonField name = StringFieldDefinition<_> (name)
+// Some filter methods require a StringFieldDefinition<string,'a> as first parameter, where 'a is the type of the second parameter
+// bsonFieldVal allows to quickly create such parameter
 let inline bsonFieldVal name = StringFieldDefinition<_,_> (name)
 
 [< EntryPoint >]
