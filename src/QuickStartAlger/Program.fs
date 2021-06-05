@@ -4,7 +4,7 @@ open MongoDB.Driver
 
 // Easy way to create a KeyValuePair: "age" => 42
 let inline (=>) key (value: obj) = KeyValuePair (key, value)
-// Several mongoDb methods leverage C# implicit conversions but F# don't use them automaticallly
+// Several mongoDb methods leverage C# implicit conversions but F# doesn't use them automaticallly
 // So we use the !> operator to explicitly do the conversions when needed
 let inline (!>) (x:^a) : ^b = ((^a or ^b) : (static member op_Implicit : ^a -> ^b) x)
 // Quick way to create a BsonDocument with just one key value pair
@@ -18,7 +18,7 @@ let inline bsonFieldVal name = StringFieldDefinition<_,_> (name)
 
 [< EntryPoint >]
 let main _ =
-    let dbClient = MongoClient ("mongodb+srv://<<YOUR-ATLAS-USER>>:<<PASSWORD>>@<<YOUR-CLUSTER>>.mongodb.net/sample_training?retryWrites=true&w=majority")
+    let dbClient = MongoClient ("mongodb+srv://<<YOUR-ATLAS-USER>>:<<PASSWORD>>@<<YOUR-CLUSTER>>.mongodb.net?retryWrites=true&w=majority")
     
     let dbList = dbClient.ListDatabases().ToEnumerable ()
 
@@ -79,8 +79,8 @@ let main _ =
     printfn "\n**********\n"
     highExamScores |> Seq.iter (printfn "%O")
 
-            // Find all documents with an exam score equal
-            // or above 95 as an iterable
+    // Find all documents with an exam score equal
+    // or above 95 as an iterable
 
     let cursor = collection.Find(highExamScoreFilter).ToCursor ()
     printfn "\n**********\n"

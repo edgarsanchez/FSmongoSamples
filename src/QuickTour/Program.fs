@@ -124,7 +124,7 @@ let main _ =
             upcast InsertOneModel (bsonDoc "_id" 4)
             upcast UpdateOneModel (!> (bsonDoc "_id" 1), Builders.Update.Set (bsonFieldVal "x", 2))
             upcast DeleteOneModel (!> (bsonDoc "_id" 3))
-            upcast ReplaceOneModel (!> (bsonDoc "_id" 4), (bsonDoc "_id" 4).Add (bsonDoc "x" 4))  |]
+            upcast ReplaceOneModel (!> (bsonDoc "_id" 4), (bsonDoc "_id" 4).AddRange (bsonDoc "x" 4))  |]
         
         let! resultBulk = collection.BulkWriteAsync models |> Async.AwaitTask
 

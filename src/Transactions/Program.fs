@@ -1,5 +1,5 @@
 open System
-open FSharp.Control.Tasks.V2.ContextInsensitive
+open FSharp.Control.Tasks //.V2.ContextInsensitive
 open MongoDB.Bson
 open MongoDB.Bson.Serialization.Attributes
 open MongoDB.Driver
@@ -22,7 +22,7 @@ type Product (sku: int, description: string, price: float) =
     [< BsonElement "Price" >]
     member val Price = price with get, set
 
-let mongoDBConnectionString = "mongodb+srv://<<YOUR-ATLAS-USER>>:<<PASSWORD>>@<<YOUR-CLUSTER>>.mongodb.net/sample_training?retryWrites=true&w=majority"
+let mongoDBConnectionString = "mongodb+srv://<<YOUR-ATLAS-USER>>:<<PASSWORD>>@<<YOUR-CLUSTER>>.mongodb.net?retryWrites=true&w=majority"
 
 let updateProductsAsync () =
     // Create client connection to our MongoDB database
